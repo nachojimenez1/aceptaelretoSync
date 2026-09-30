@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "AceptaElReto to GitHub Sync",
+  "name": "AceptaElReto Sync",
   "version": "2.0",
   "description": "Sincroniza tus soluciones de Acepta el Reto con estadísticas y enunciados automáticamente.",
   "permissions": ["storage"],

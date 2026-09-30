@@ -109,6 +109,12 @@ function mostrarDashboard(data) {
     if (sub !== null) chrome.storage.local.set({ subdirectory: sub.trim() });
   });
 
+  document.getElementById('resetAllBtn').addEventListener('click', () => {
+    if (confirm('¿Reiniciar estadísticas locales? Tus archivos en GitHub no se tocarán.')) {
+      chrome.storage.local.remove(['solvedHistory', 'syncCount'], () => location.reload());
+    }
+  });
+
   document.getElementById('signOutBtn').addEventListener('click', async () => {
     if (confirm('¿Seguro que quieres cerrar sesión de GitHub?')) {
       await chrome.storage.local.remove(['githubToken', 'githubUser', 'githubRepo']);
@@ -119,6 +125,24 @@ function mostrarDashboard(data) {
   renderizarDiasRacha(history);
   renderizarDonutAnimado(history);
 }
+
+function calcularRacha(history) {
+  const solvedDates = new Set(history.map(item => new Date(item.date).toDateString()));
+  let streak = 0;
+  const d = new Date();
+
+  if (!solvedDates.has(d.toDateString())) {
+    d.setDate(d.getDate() - 1);
+  }
+
+  while (solvedDates.has(d.toDateString())) {
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+
+  return streak;
+}
+
 
 function renderizarDiasRacha(history) {
   const container = document.getElementById('streakContainer');
@@ -136,8 +160,26 @@ function renderizarDiasRacha(history) {
     ultimos5Dias.push(d);
   }
 
-  ultimos5Dias.forEach(date => {
+  const rachaActual = calcularRacha(history);
+  const hoyResuelto = solvedDates.has(hoy.toDateString());
+
+  const titleEl = document.querySelector('.title-row h1');
+  const subtitleEl = document.querySelector('.subtitle');
+  if (titleEl && subtitleEl) {
+    if (rachaActual > 0) {
+      titleEl.innerText = `${rachaActual} Day Streak!`;
+      subtitleEl.innerText = hoyResuelto 
+        ? '¡Objetivo diario cumplido! Racha asegurada.' 
+        : '¡Resuelve uno hoy para mantener viva tu racha!';
+    } else {
+      titleEl.innerText = 'Start your streak!';
+      subtitleEl.innerText = 'Do one more, and keep up the streak!';
+    }
+  }
+
+  ultimos5Dias.forEach((date, idx) => {
     const isSolved = solvedDates.has(date.toDateString());
+    const isLastDay = (idx === ultimos5Dias.length - 1);
     const dayLetter = dayLetters[date.getDay()];
 
     const col = document.createElement('div');
@@ -149,7 +191,17 @@ function renderizarDiasRacha(history) {
 
     const badge = document.createElement('div');
     badge.className = `day-badge ${isSolved ? 'active' : ''}`;
-    badge.innerText = isSolved ? '✓' : '✕';
+
+    if (isLastDay) {
+      if (isSolved) {
+        badge.innerText = rachaActual;
+        badge.classList.add('streak-number');
+      } else {
+        badge.innerText = '✕';
+      }
+    } else {
+      badge.innerText = isSolved ? '✓' : '✕';
+    }
 
     col.appendChild(lbl);
     col.appendChild(badge);

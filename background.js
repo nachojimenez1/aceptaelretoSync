@@ -112,7 +112,7 @@ async function procesarYSubir(payload) {
     ext: ext,
     time: stats.time,
     memory: stats.memory,
-    date: stats.date || new Date().toISOString()
+    date: new Date().toISOString()
   };
 
   if (index >= 0) {
