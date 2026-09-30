@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div id="authView" class="view hidden">
+      <div class="auth-header">
+        <span class="big-icon">👀</span>
+        <h2>AceptaElReto Sync</h2>
+        <p class="auth-desc">Inicia sesión con tu token de GitHub para auto-crear tu repositorio y sincronizar tus envíos en C++, Java o C.</p>
+      </div>
+
+      <div class="auth-body">
+        <label class="field-label" for="tokenInput">GitHub Token (Classic con permiso <code>repo</code>)</label>
+        <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" spellcheck="false" />
+        
+        <button id="connectBtn" class="btn-primary">Conectar y crear repositorio</button>
+        
+        <a href="https://github.com/settings/tokens/new?scopes=repo&description=AceptaElReto-Sync" target="_blank" class="token-link">
+          🔗 Crear token en GitHub en 10 segundos
+        </a>
+
+        <div id="authError" class="error-msg hidden"></div>
+      </div>
+    </div>
+
+    <div id="dashboardView" class="view hidden">
+      <header class="header">
+        <div class="title-group">
+          <span class="eyes-icon">👀</span>
+          <div>
+            <div class="title-row">
+              <h1>Start your streak!</h1>
+              <a id="repoDirectLink" href="#" target="_blank" class="link-icon" title="Abrir en GitHub">🔗</a>
+            </div>
+            <p class="subtitle">Do one more, and keep up the streak!</p>
+          </div>
+        </div>
+        <button id="gearBtn" class="gear-btn" title="Ajustes">⚙️</button>
+      </header>
+
+      <div id="settingsMenu" class="settings-dropdown hidden">
+        <div class="menu-user">
+          <img id="menuAvatar" class="avatar" src="" alt="avatar" />
+          <div class="user-text">
+            <span id="menuUsername" class="user-handle">usuario</span>
+            <span id="menuRepo" class="repo-name">repo</span>
+          </div>
+        </div>
+
+        <div class="menu-section-title">General</div>
+        <button id="unlinkRepoBtn" class="menu-item">
+          <span class="item-icon">🔀</span> Change or unlink repo
+        </button>
+        <button id="setSubdirBtn" class="menu-item">
+          <span class="item-icon">//</span> Set a subdirectory
+        </button>
+        <div class="menu-item disabled">
+          <span class="item-icon">📅</span> Set a reminder <span class="tag-soon">SOON 🤩</span>
+        </div>
+
+        <div class="menu-section-title danger">Danger Area</div>
+        <button id="resetAllBtn" class="menu-item danger">
+          <span class="item-icon">🗑️</span> Reset Statistics
+        </button>
+        <button id="signOutBtn" class="menu-item danger">
+          <span class="item-icon">🚪</span> Sign Out
+        </button>
+      </div>
+
+      <section class="streak-days" id="streakContainer"></section>
+
+      <section class="stats-card">
+        <div class="chart-wrapper">
+          <svg class="donut-svg" viewBox="0 0 42 42">
+   
+            <circle class="donut-bg" cx="21" cy="21" r="15.915" fill="none" stroke="#f1f3f5" stroke-width="4.5"></circle>
+
+            <circle id="segCpp" class="donut-segment cpp" cx="21" cy="21" r="15.915" fill="none" stroke="#2563eb" stroke-width="4.5"></circle>
+            <circle id="segJava" class="donut-segment java" cx="21" cy="21" r="15.915" fill="none" stroke="#f97316" stroke-width="4.5"></circle>
+            <circle id="segC" class="donut-segment c" cx="21" cy="21" r="15.915" fill="none" stroke="#64748b" stroke-width="4.5"></circle>
+          </svg>
+          <div class="donut-center">
+            <span class="total-label">Total</span>
+            <span id="totalSolved" class="total-count">0</span>
+          </div>
+        </div>
+
+        <div class="lang-breakdown">
+          <div class="lang-row">
+            <span class="lang-name cpp">C++</span>
+            <span id="countCpp" class="lang-val">0</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name java">Java</span>
+            <span id="countJava" class="lang-val">0</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name c">C</span>
+            <span id="countC" class="lang-val">0</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Having Issues? <a href="https://github.com" target="_blank">Report Bug</a> | Made by <a id="authorLink" href="https://www.linkedin.com/in/ignaciojimenezm/" target="_blank">@nachojimenez</a></span>
+      </footer>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
