@@ -52,7 +52,4 @@ Inspirada en herramientas como *LeetSync*, detecta tus envíos con veredicto **A
 
 Para utilizar la extensión en tu navegador sin necesidad de compilar nada:
 
-### 1. Clonar o descargar el proyecto
-Descarga el repositorio como archivo ZIP o clónalo con Git:
-```bash
-git clone [https://github.com/nachojimenez1/aceptaelretoSync.git](https://github.com/nachojimenez1/aceptaelretoSync.git)
+Descargala aqui: 
