@@ -52,4 +52,4 @@ Inspirada en herramientas como *LeetSync*, detecta tus envíos con veredicto **A
 
 Para utilizar la extensión en tu navegador sin necesidad de compilar nada:
 
-Descargala aqui: 
+Descargala aqui: https://chromewebstore.google.com/detail/llgjjcjmighopnnfmkokkhnlaibdapag?utm_source=item-share-cb
